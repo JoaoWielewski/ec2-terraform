@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_key_pair" "key_pair" {
   key_name   = "my-key-pair"
-  public_key = var.public_key
+  public_key = file("./ssh/key-pair.pub")
 }
 
 terraform {
