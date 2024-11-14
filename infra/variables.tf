@@ -15,8 +15,3 @@ variable "ami_id" {
   type        = string
   default     = "ami-0984f4b9e98be44bf"
 }
-
-variable "public_key" {
-  description = "The public key"
-  type        = string
-}
