@@ -21,16 +21,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Add SSH Key
+    - name: Add SSH Key for Terraform
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }} 
       run: |
         mkdir -p ~/.ssh
-        mkdir -p infra/ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-        ssh-keygen -y -f ~/.ssh/id_rsa > infra/ssh/key-pair.pub
+        echo "$SSH_PUBLIC_KEY" > ~/.ssh/key-pair.pub
 
     - name: Terraform Init
       run: cd infra && AWS_DEFAULT_REGION=us-east-1 AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} terraform init
